@@ -69,12 +69,12 @@ You can also run the application using Docker. Use the provided Dockerfile and d
 Build the Docker image:
 
 ``` bash
-docker build -t streamlit-s3 .
+docker build -t streamlit_app-s3 .
 ```
 
 Run the Docker container:
 
 ``` bash
-docker run -d -p 8000:8000 streamlit-s3
+docker run -d -p 8000:8000 streamlit_app-s3
 ```
 

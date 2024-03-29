@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  fastapi:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - AWS_ACCESS_KEY_ID=your_access_key
+      - AWS_SECRET_ACCESS_KEY=your_secret_key
+      - AWS_BUCKET_NAME=your_bucket_name
+    command: uvicorn Displayapi:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ~/fastapi/Displayapi.py:/app/Displayapi.py
+      - ~/fastapi/uploadendapi.py:/app/uploadendapi.py
+      - ~/fastapi/.env:/app/.env
+    networks:
+      - airflow_app_default
+
+networks:
+  airflow_app_default:
+    external: true
+

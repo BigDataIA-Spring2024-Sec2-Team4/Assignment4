@@ -3,6 +3,7 @@ import requests
 import os
 from dotenv import load_dotenv
 
+fastapi_set_url = "http://fastapi:8000/upload"
 # Load environment variables from .env file
 load_dotenv()
 
@@ -31,7 +32,7 @@ if st.button("Upload to S3"):
             # Send files to FastAPI backend for upload to S3
             for file in uploaded_files:
                 files = {"file": (file.name, file.getvalue())}
-                response = requests.post("http://localhost:8000/upload", files=files)
+                response = requests.post(fastapi_set_url, files=files)
                 if response.status_code == 200:
                     st.success(f"File '{file.name}' uploaded to S3 successfully")
                 else:

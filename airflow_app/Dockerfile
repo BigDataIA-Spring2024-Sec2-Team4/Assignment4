@@ -24,3 +24,4 @@ RUN pip install --upgrade dbt-snowflake
 RUN playwright install
 
 # Continue with any other setup you may need
+EXPOSE 9099

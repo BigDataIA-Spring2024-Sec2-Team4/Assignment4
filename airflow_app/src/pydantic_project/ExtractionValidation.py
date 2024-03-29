@@ -69,10 +69,10 @@ input_csv_path = '../dataset/final_output.csv'  # Replace with the path to your 
 output_csv_path = '../dataset/Cleanedfinal_output.csv'  # Replace with the path for the cleaned output CSV
 
 # Call the function to validate and save the cleaned data to CSV
-validate_and_save_csv(input_csv_path, output_csv_path)
 
+if __name__ == "__main__":
+    validate_and_save_csv(input_csv_path, output_csv_path)
 
-# In[ ]:
 
 
 

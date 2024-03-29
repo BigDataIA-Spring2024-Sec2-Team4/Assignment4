@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from airflow.utils.trigger_rule import TriggerRule
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
 from airflow.providers.snowflake.operators.snowflake import SnowflakeOperator
-
+import boto3
 # from src.pydantic.url_model import validate_and_store
 import sys
 import os
@@ -15,6 +15,8 @@ import os
 # Add the src directory to sys.path
 
 from src.pydantic_project.url_model import validate_and_store
+from src.pydantic_project.ExtractionValidation import validate_and_save_csv
+from src.PdfExtraction.Extraction import process_all_pdfs
 
 default_args = {
     'owner': 'airflow',
@@ -43,7 +45,47 @@ def branch_function(**kwargs):
 
 def upload_file_to_s3(bucket_name, s3_key, file_path):
     hook = S3Hook(aws_conn_id='aws_default')
-    hook.load_file(filename=file_path, bucket_name=bucket_name, replace=True, key=s3_key)    
+    hook.load_file(filename=file_path, bucket_name=bucket_name, replace=True, key=s3_key) 
+
+# def download_pdf_from_s3(bucket_name, s3_key, local_path):
+#     hook = S3Hook(aws_conn_id='aws_default')
+#     hook.download_file(key=s3_key, bucket_name=bucket_name, local_path=local_path)
+
+def download_pdf_from_s3(bucket_name, s3_key, local_directory):
+    """
+    Download a PDF file from an S3 bucket to a specified local directory using boto3.
+
+    :param bucket_name: Name of the S3 bucket.
+    :param s3_key: S3 key of the PDF file to download.
+    :param local_directory: Local directory to save the downloaded PDF.
+    """
+    # Ensure the local directory exists
+    if not os.path.exists(local_directory):
+        os.makedirs(local_directory)
+    # Construct the local file path
+    local_file_path = os.path.join(local_directory, os.path.basename(s3_key))
+
+    s3 = boto3.client('s3', aws_access_key_id='', aws_secret_access_key='')
+    s3.download_file(bucket_name, s3_key, local_file_path)
+    print(f"Downloaded {s3_key} to {local_file_path}")
+
+
+def execute_pdf_tasks():
+    # Assuming download_pdfs_from_s3 and process_all_pdfs are defined elsewhere in your DAG file
+    download_pdf_from_s3('docpool','2024-l1-topics-combined-2.pdf','/opt/airflow/src/dataset/')
+    download_pdf_from_s3('docpool','2024-l2-topics-combined-2.pdf','/opt/airflow/src/dataset/')
+    download_pdf_from_s3('docpool','2024-l3-topics-combined-2.pdf','/opt/airflow/src/dataset/')
+    process_all_pdfs('/opt/airflow/src/dataset/*.pdf')
+
+def validation_tasks():
+    # Assuming download_pdfs_from_s3 and process_all_pdfs are defined elsewhere in your DAG file
+    validate_and_save_csv('/opt/airflow/src/dataset/final_output.csv','/opt/airflow/src/dataset/Cleanedfinal_output.csv' )
+    validate_and_store('/opt/airflow/src/dataset/CFA.json','/opt/airflow/src/dataset/validated_CFA.csv')
+
+def uploads3():
+    upload_file_to_s3('validateddocpool','CFA.csv','/opt/airflow/src/dataset/validated_CFA.csv')
+    upload_file_to_s3('validateddocpool','PDF.csv','/opt/airflow/src/dataset/Cleanedfinal_output.csv')
+      
 
 
 sql_file_path = '/opt/airflow/src/DBT-Snowflake.sql'
@@ -74,15 +116,15 @@ with DAG(
     #     task_id='skip_webscraping',
     # )
 
-    extract_pdf_task = EmptyOperator(
+    extract_pdf_task = PythonOperator(
         task_id='extract_pdf_task',
-        # Add any necessary op_kwargs here
+        python_callable=execute_pdf_tasks,
+                # Add any necessary op_kwargs here
     )
 
     validate_and_store_task = PythonOperator(
         task_id='validate_and_store',
-        python_callable=validate_and_store,
-        op_kwargs={'json_file_path': '/opt/airflow/src/dataset/CFA.json', 'csv_file_path': '/opt/airflow/src/dataset/validated_CFA.csv'},
+        python_callable=validation_tasks,         
     )
 
     join_task= EmptyOperator(
@@ -92,8 +134,7 @@ with DAG(
 
     upload_to_s3 = PythonOperator(
         task_id='upload_to_s3',
-        python_callable=upload_file_to_s3,
-        op_kwargs={'bucket_name': 'airflow-cfa', 's3_key': 'CFA.csv', 'file_path': '/opt/airflow/src/dataset/validated_CFA.csv'},
+        python_callable=uploads3,
     )
 
     snowflake_upload = SnowflakeOperator(

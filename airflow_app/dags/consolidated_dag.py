@@ -24,12 +24,22 @@ default_args = {
 }
 
 def branch_function(**kwargs):
-    """Decides whether to run the webscraping task based on the trigger source."""
+    """Decides the starting task based on the trigger source."""
     trigger_source = kwargs.get('dag_run').conf.get('trigger_source', '')
-    if trigger_source == 'streamlit':
+    print(trigger_source)
+    if trigger_source == 'button1':
         return 'run_scrapy_playwright'
-    else:
-        return 'skip_webscraping'
+    if trigger_source == 'button2':
+        return 'extract_pdf_task'
+
+    
+# def branch_function(**kwargs):
+#     """Decides whether to run the webscraping task based on the trigger source."""
+#     trigger_source = kwargs.get('dag_run').conf.get('trigger_source', '')
+#     if trigger_source == 'streamlit':
+#         return 'run_scrapy_playwright'
+#     else:
+#         return 'skip_webscraping'
 
 def upload_file_to_s3(bucket_name, s3_key, file_path):
     hook = S3Hook(aws_conn_id='aws_default')
@@ -41,12 +51,6 @@ sql_file_path = '/opt/airflow/src/DBT-Snowflake.sql'
 with open(sql_file_path, 'r') as file:
     sql_commands = file.read()
 
-copy_into_table_sql = """
-COPY INTO your_snowflake_table
-FROM 's3://airflow-cfa/CFA.csv'
-CREDENTIALS=(aws_key_id='YOUR_AWS_ACCESS_KEY_ID' aws_secret_key='YOUR_AWS_SECRET_ACCESS_KEY')
-FILE_FORMAT = (TYPE = 'CSV' FIELD_OPTIONALLY_ENCLOSED_BY = '"' SKIP_HEADER = 1);
-"""
 
 with DAG(
     'consolidated_dag',
@@ -66,8 +70,13 @@ with DAG(
         task_id='run_scrapy_playwright',
         bash_command='cd /opt/airflow/src/scrapy/Pwspider/spiders && scrapy crawl pwspidey -o /opt/airflow/src/dataset/CFA.json',
     )
-    skip_webscraping = EmptyOperator(
-        task_id='skip_webscraping',
+    # skip_webscraping = EmptyOperator(
+    #     task_id='skip_webscraping',
+    # )
+
+    extract_pdf_task = EmptyOperator(
+        task_id='extract_pdf_task',
+        # Add any necessary op_kwargs here
     )
 
     validate_and_store_task = PythonOperator(
@@ -103,4 +112,4 @@ with DAG(
 
 
 
-    decide_to_scrape >> [run_scrapy_playwright, skip_webscraping] >> join_task >> validate_and_store_task >> upload_to_s3 >> snowflake_upload >> run_dbt_models
+    decide_to_scrape >> [run_scrapy_playwright, extract_pdf_task] >> join_task >> validate_and_store_task >> upload_to_s3 >> snowflake_upload >> run_dbt_models

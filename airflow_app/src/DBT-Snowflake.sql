@@ -31,21 +31,21 @@ create table raw_prod.cfa.ctable
 
 create table raw_test.pdf.ptable
 ( File_Name varchar,
-  Heading_Topic varchar,
-  Sub_Headings varchar,
-  Count integer
+  Topic varchar,
+  Heading varchar,
+  Learning_Outcomes varchar
 );   
 
 
 COPY INTO raw_test.cfa.ctable
-	FROM 's3://airflow-cfa/CFA.csv'
-	CREDENTIALS=(AWS_KEY_ID='' AWS_SECRET_KEY='')
+	FROM 's3://validateddocpool/CFA.csv'
+	CREDENTIALS=(AWS_KEY_ID='AKIAZI2LHQ7DCO56WE6D' AWS_SECRET_KEY='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')
 	FILE_FORMAT = (TYPE = 'CSV' FIELD_OPTIONALLY_ENCLOSED_BY = '"' SKIP_HEADER = 1 NULL_IF=('<NULL>', 'NULL', ''))
 	ON_ERROR = 'CONTINUE';
 
 COPY INTO raw_test.pdf.ptable
-	FROM 's3://airflow-cfa/final_output.csv'
-	CREDENTIALS=(AWS_KEY_ID='' AWS_SECRET_KEY='')
+	FROM 's3://validateddocpool/PDF.csv'
+	CREDENTIALS=(AWS_KEY_ID='AKIAZI2LHQ7DCO56WE6D' AWS_SECRET_KEY='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')
 	FILE_FORMAT = (TYPE = 'CSV' FIELD_OPTIONALLY_ENCLOSED_BY = '"' SKIP_HEADER = 1 NULL_IF=('<NULL>', 'NULL', ''))
 	ON_ERROR = 'CONTINUE'; 
 
@@ -57,14 +57,3 @@ create table raw_prod.pdf.ptable
   Topics_Count integer
 ); 
 
-COPY INTO raw_prod.pdf.ptable
-	FROM 's3://airflow-cfa/final_output.csv'
-	CREDENTIALS=(AWS_KEY_ID='' AWS_SECRET_KEY='')
-	FILE_FORMAT = (TYPE = 'CSV' FIELD_OPTIONALLY_ENCLOSED_BY = '"' SKIP_HEADER = 1 NULL_IF=('<NULL>', 'NULL', ''))
-	ON_ERROR = 'CONTINUE'; 
-
-COPY INTO raw_prod.cfa.ctable
-	FROM 's3://airflow-cfa/CFA.csv'
-	CREDENTIALS=(AWS_KEY_ID='' AWS_SECRET_KEY='')
-	FILE_FORMAT = (TYPE = 'CSV' FIELD_OPTIONALLY_ENCLOSED_BY = '"' SKIP_HEADER = 1 NULL_IF=('<NULL>', 'NULL', ''))
-	ON_ERROR = 'CONTINUE';

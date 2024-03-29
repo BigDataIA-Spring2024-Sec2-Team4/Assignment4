@@ -16,7 +16,7 @@ USER airflow
 
 # Use the Airflow user to install Python packages
 RUN pip install --no-cache-dir scrapy scrapy-playwright playwright pydantic \
-    apache-airflow-providers-amazon apache-airflow-providers-snowflake dbt-core dbt-snowflake
+    apache-airflow-providers-amazon apache-airflow-providers-snowflake dbt-core dbt-snowflake PyPDF2 pandas boto3
 
 RUN pip install --upgrade dbt-snowflake
 

@@ -1,4 +1,20 @@
 # Assignment4
+## Live application Links
+
+
+[![codelabs](https://img.shields.io/badge/codelabs-4285F4?style=for-the-badge&logo=codelabs&logoColor=white)](https://codelabs-preview.appspot.com/?file_id=1Zo7Izg-QxwYVgBzZWhqhnRQnYeTOEthq2rflQl-ytnQ#0)
+
+## Problem Statement
+
+
+## Project Goals
+The task involves building an end-to-end pipeline utilizing Airflow for automating the extraction and storage of meta-data and content from PDF files into Snowflake. This requires the development of two API services using FastAPI. The first API service will trigger an Airflow pipeline upon receiving the S3-file location, facilitating extraction, data validation, and loading of data and metadata into Snowflake. The second API service will interact with Snowflake to execute queries and return responses. Additionally, the Streamlit framework will serve as the interface for the end-user application to upload PDF files, initiate the pipeline, and display the results obtained from Snowflake.
+## Technologies Used
+
+## Data Sources
+
+
+
 # Streamlit-S3 Integration using FastAPI
 This project demonstrates the integration of Streamlit with Amazon S3 using FastAPI. It provides endpoints to upload files to an S3 bucket and retrieve data from Snowflake.
 
@@ -7,6 +23,26 @@ Before running the application, ensure you have the following installed:
 
 - Python 3.9 or higher
 - Docker (optional, for containerization)
+- Snowflake account setpu
+- AWS Account setup and an S3 bucket
+
+## Project Structure
+```⁠ bash
+.DS_Store
+.gitignore
+DBT-Snowflake.txt
+Datasets
+   |-- streamlit_app
+   |   |-- pages
+   |       |-- extraction.py
+   |   |-- streamlit_app.py
+   |-- fastapi
+   |   |-- uploadend.api
+   |   |-- display.api
+   |-- requirements.txt
+   |-- README
+
+```
 
 ## Setup
 1. Clone the repository to your local machine:
@@ -78,3 +114,24 @@ Run the Docker container:
 docker run -d -p 8000:8000 streamlit_app-s3
 ```
 
+## Learning Outcomes
+- Understanding of orchestrating data pipelines using Airflow.
+- Proficiency in building API services using FastAPI for seamless interaction with other systems.
+- Hands-on experience with cloud data warehouses like Snowflake for storing and querying data.
+- Familiarity with Streamlit framework for developing user-friendly interfaces.
+- Knowledge of Docker for containerizing applications and facilitating easy deployment.
+- Experience in hosting services online for accessibility and scalability.
+- Enhanced skills in handling PDF data extraction and processing in a distributed environment.
+- Ability to design and implement end-to-end data solutions for real-world applications.
+
+
+## Conclusion
+The project successfully implements an automated pipeline for handling PDF data extraction and storage into Snowflake. By utilizing Airflow for orchestration and FastAPI for building API services, alongside Streamlit for user interaction, the solution ensures efficient data handling and accessibility. Dockerization of the Streamlit app and API services enables easy deployment and scalability, while hosting these services online ensures accessibility from anywhere. Overall, the implemented architecture streamlines the process of handling PDF data, enhancing efficiency and accessibility for users.
+
+## Team Information and Contribution
+
+| Name       | Contribution % | Contributions                             |
+|------------|----------------|-------------------------------------------|
+| Riya Singh  |             |Architectural Diagram|
+| Nidhi Nitin Kulkarani   |           ||
+| Deepakraja Rajendran   |           | Streamlit web-app for S3 and Snowflake Integration, FastAPI for S3 integration and snowflake, Docker, S3 bucket handling, README, Documentation|

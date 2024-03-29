@@ -12,7 +12,7 @@ Before running the application, ensure you have the following installed:
 1. Clone the repository to your local machine:
 
 ```bash
-git clone [<repository_url>](https://github.com/BigDataIA-Spring2024-Sec2-Team4/Assignment4)
+git clone [Assignment4 GitHub repository](https://github.com/BigDataIA-Spring2024-Sec2-Team4/Assignment4)
 cd Assignment4
 ```
 

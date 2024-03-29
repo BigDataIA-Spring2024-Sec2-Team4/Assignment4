@@ -134,4 +134,4 @@ The project successfully implements an automated pipeline for handling PDF data 
 |------------|----------------|-------------------------------------------|
 | Riya Singh  |             |Architectural Diagram|
 | Nidhi Nitin Kulkarani   |           ||
-| Deepakraja Rajendran   |           | Streamlit web-app for S3 and Snowflake Integration, FastAPI for S3 integration and snowflake, Docker, S3 bucket handling, README, Documentation|
+| Deepakraja Rajendran   |           | Streamlit Web-App for S3 and Snowflake Integration, 2 FastAPI services for S3 integration and snowflake, Docker, S3 bucket handling, README, Codelabs documentation|

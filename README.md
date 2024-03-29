@@ -5,25 +5,25 @@ This project demonstrates the integration of Streamlit with Amazon S3 using Fast
 ## Prerequisites
 Before running the application, ensure you have the following installed:
 
-Python 3.9 or higher
-Docker (optional, for containerization)
+- Python 3.9 or higher
+- Docker (optional, for containerization)
 
 ## Setup
 1. Clone the repository to your local machine:
 
-``` bash
+```bash
 git clone [<repository_url>](https://github.com/BigDataIA-Spring2024-Sec2-Team4/Assignment4)
 cd Assignment4
 ```
 
 3. Install dependencies:
 
-``` bash
+```bash
 pip install -r requirements.txt
 ```
 
 6. Set up your AWS credentials and Snowflake credentials by creating a .env file in the root directory and adding the following variables:
-``` bash
+```bash
 # AWS credentials
 AWS_REGION=<your_aws_region>
 AWS_ACCESS_KEY_ID=<your_access_key_id>

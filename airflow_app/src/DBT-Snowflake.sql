@@ -31,9 +31,9 @@ create table raw_prod.cfa.ctable
 
 create table raw_test.pdf.ptable
 ( File_Name varchar,
-  Heading_Topic varchar,
-  Sub_Headings varchar,
-  Count integer
+  Topic varchar,
+  Heading varchar,
+  Learning_Outcomes varchar
 );   
 
 

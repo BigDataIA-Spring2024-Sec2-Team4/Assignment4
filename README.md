@@ -10,6 +10,9 @@ The aim is to automate PDF data extraction and storage into Snowflake using Airf
 ## Project Goals
 The task involves building an end-to-end pipeline utilizing Airflow for automating the extraction and storage of meta-data and content from PDF files into Snowflake. This requires the development of two API services using FastAPI. The first API service will trigger an Airflow pipeline upon receiving the S3-file location, facilitating extraction, data validation, and loading of data and metadata into Snowflake. The second API service will interact with Snowflake to execute queries and return responses. Additionally, the Streamlit framework will serve as the interface for the end-user application to upload PDF files, initiate the pipeline, and display the results obtained from Snowflake.
 
+## Architecture Diagram
+<img width="789" alt="Architecture_Diagram" src="https://github.com/BigDataIA-Spring2024-Sec2-Team4/Assignment4/assets/144851281/b043031b-0040-4db4-a688-9623be0272ce">
+
 ## Technologies Used
 - Airflow
 - FastAPI

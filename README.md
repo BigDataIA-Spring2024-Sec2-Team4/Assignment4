@@ -66,7 +66,7 @@ airflow_app
    |  |--Dockerfile
    |  |--docker-compose.yaml
 streamlit_app
-   |-- pages
+   |--pages
    |  |-- extraction.py
    |  |-- streamlit_app.py
 fastapi

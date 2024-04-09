@@ -42,6 +42,26 @@ Before running the application, ensure you have the following installed:
 .gitignore
 DBT-Snowflake.txt
 Datasets
+   |--airflow_app
+      |--architectural_diagram
+         |--Architectural Diagram.ipynb
+         |--Streamlit.png
+         |--airflow.png
+         |--fastAPI.png
+      |--dags
+         |--_init_.py
+         |--consolidated_dag.py
+      |--src
+         |--PdfExtraction
+         |--dataset
+         |--dbt_proj
+         |--pydantic_project
+         |--scrapy
+         |--DBT-Snowflake.sql
+         |--_init_.py
+      |--.env
+      |--Dockerfile
+      |--docker-compose.yaml
    |-- streamlit_app
    |   |-- pages
    |       |-- extraction.py
@@ -49,7 +69,9 @@ Datasets
    |-- fastapi
    |   |-- uploadend.api
    |   |-- display.api
+   |--.gitignore
    |-- requirements.txt
+   |-- LICENSE
    |-- README
 
 ```

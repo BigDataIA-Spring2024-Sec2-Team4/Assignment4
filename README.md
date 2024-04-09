@@ -142,6 +142,6 @@ The project successfully implements an automated pipeline for handling PDF data 
 
 | Name       | Contribution % | Contributions                             |
 |------------|----------------|-------------------------------------------|
-| Riya Singh  |             |Architectural Diagram|
-| Nidhi Nitin Kulkarani   |      40%     | Airflow Integration for pipelines - Web scraping, S3 and Snowflake Upload, Airflow trigger via Streamlit, Dockerization of Airflow, Streamlit and FastAPI, Deployment on Cloud |
-| Deepakraja Rajendran   |     35%      | Streamlit Web-App for S3 and Snowflake Integration, 2 FastAPI services for S3 integration and snowflake, Docker, S3 bucket handling, README, Codelabs documentation|
+| Riya Singh  |      32       | Created Dag in Airflow, worked on the tasks in airflow, Data Extraction using PyPDF2, Data Validation using Pydantic, Architectural Diagram Codelabs documentation,README|
+| Nidhi Nitin Kulkarani   |      36    | Airflow Integration for pipelines - Web scraping, S3 and Snowflake Upload, Airflow trigger via Streamlit, Dockerization of Airflow, Streamlit and FastAPI, Deployment on Cloud |
+| Deepakraja Rajendran   |     32     | Streamlit Web-App for S3 and Snowflake Integration, 2 FastAPI services for S3 integration and snowflake, Docker, S3 bucket handling, README, Codelabs documentation|
